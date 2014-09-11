@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<title>Journal Clubs -- Home</title>
+	</head>
+<body>
+{% if upcoming_meetings_list %}
+    <ul>
+	{% for meeting in upcoming_meetings_list %}
+	<li><a href="/meetings/{{ meeting.id }}/">{{ meeting.timeslot }}</a>
+	- {{meeting.presenter}}: {{meeting.publication_reference}}
+	<!-- add links to user stats -->
+	</li>
+	{% endfor %}
+	</ul>
+{% else %}
+	<p>No meetings are available.</p>
+	{% endif %}
+</body>
+</html>
