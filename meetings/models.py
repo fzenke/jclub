@@ -15,7 +15,7 @@ class TimeSlot(models.Model):
       
 
 class Meeting(models.Model):
-      presenter = models.ForeignKey(User, unique=True)
+      presenter = models.ForeignKey(User, unique=False)
       timeslot  = models.ForeignKey(TimeSlot, unique=True)
       location  = models.CharField(max_length=100)
       publication_reference = models.CharField(max_length=200)
