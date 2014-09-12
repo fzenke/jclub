@@ -12,7 +12,7 @@
 	{% for meeting in upcoming_meetings_list %}
 	<p> 
 	<a href="/meetings/{{ meeting.id }}/">{{ meeting.timeslot }}</a> {{meeting.presenter}} [ {% for cat in meeting.publication_category.all %} {{ cat.name }} {% empty %} uncategorized {% endfor %} ] <br/>
-	{{ meeting.publication_reference }} 
+	{{ meeting.publication_reference }} <br/> 
 	<a href="{{ meeting.publication_url }}">full text</a>
 	</p>
 	<!-- add links to user stats -->
