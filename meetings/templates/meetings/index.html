@@ -3,17 +3,50 @@
 		<title>Journal Clubs -- Home</title>
 	</head>
 <body>
+
+<h2>Upcoming journal clubs</h2>
 {% if upcoming_meetings_list %}
-    <ul>
+    <dl>
 	{% for meeting in upcoming_meetings_list %}
-	<li><a href="/meetings/{{ meeting.id }}/">{{ meeting.timeslot }}</a>
-	- {{meeting.presenter}}: {{meeting.publication_reference}}
+	<dt><a href="/meetings/{{ meeting.id }}/">{{ meeting.timeslot }}</a> {{meeting.presenter}}</dt>
+	<dd>
+	{{meeting.publication_reference}}
 	<!-- add links to user stats -->
+	</dd>
 	</li>
 	{% endfor %}
-	</ul>
+	</dl>
 {% else %}
 	<p>No meetings are available.</p>
-	{% endif %}
+{% endif %}
+
+<h2>Next slots and presenters</h2>
+<table>
+	<tr>
+		<td>
+			{% if upcoming_timeslots_list %}
+				<ol>
+				{% for timeslot in upcoming_timeslots_list %}
+				{% endfor %}
+				</ol>
+			{% else %}
+				<p>No timeslots are available.</p>
+			{% endif %}
+		</td>
+		<td>
+			{% if upcoming_presenter_list %}
+				<ol>
+				{% for presenter in upcoming_presenter_list %}
+				<!-- add links to user stats -->
+				</li>
+				{% endfor %}
+				</ol>
+			{% else %}
+				<p>No presenters are available.</p>
+			{% endif %}
+		</td>
+	</tr>
+</table>
+
 </body>
 </html>
