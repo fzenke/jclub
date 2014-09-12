@@ -29,6 +29,7 @@ To sign up please <a href="/admin/">log in</a> and create a new meeting.
 			{% if upcoming_timeslots_list %}
 				<ol>
 				{% for timeslot in upcoming_timeslots_list %}
+					<li>{{ timeslot.date_time}}</li>
 				{% endfor %}
 				</ol>
 			{% else %}
@@ -36,11 +37,11 @@ To sign up please <a href="/admin/">log in</a> and create a new meeting.
 			{% endif %}
 		</td>
 		<td>
-			{% if upcoming_presenter_list %}
+			{% if upcoming_presenters_list %}
 				<ol>
-				{% for presenter in upcoming_presenter_list %}
-				<!-- add links to user stats -->
-				</li>
+				{% for presenter in upcoming_presenters_list %}
+				
+					<li>{{ presenter.username}}</li>
 				{% endfor %}
 				</ol>
 			{% else %}
