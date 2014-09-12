@@ -6,21 +6,26 @@
 
 <h2>Upcoming journal clubs</h2>
 {% if upcoming_meetings_list %}
-    <dl>
+    <p>
 	{% for meeting in upcoming_meetings_list %}
-	<dt><a href="/meetings/{{ meeting.id }}/">{{ meeting.timeslot }}</a> {{meeting.presenter}}</dt>
-	<dd>
-	{{meeting.publication_reference}}
-	<!-- add links to user stats -->
-	</dd>
-	</li>
+	<a href="/meetings/{{ meeting.id }}/">{{ meeting.timeslot }}</a> {{meeting.presenter}} [
+	{% for cat in meeting.publication_category.all %}
+	    {{ cat.name }}
+	{% empty %}
+		uncategorized
 	{% endfor %}
-	</dl>
+	] <br/>
+	{{ meeting.publication_reference }} 
+	<a href="{{ meeting.publication_url }}">full text</a>
+	</p>
+	<!-- add links to user stats -->
+	{% endfor %}
 {% else %}
 	<p>No meetings are available.</p>
 {% endif %}
 
 <h2>Next slots and presenters</h2>
+To sign up please <a href="/admin/">log in</a> and create a new meeting.
 <table>
 	<tr>
 		<td>
