@@ -5,5 +5,5 @@ from jclub.apps.meetings import views
 urlpatterns = patterns('',
     
     url(r'^(?P<meeting_id>\d+)/$', views.detail, name='detail'),
-    url(r'^$', views.index, name='index'),
+    url(r'^$', views.index, name='jclub_index'),
 )
