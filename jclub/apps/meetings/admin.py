@@ -6,3 +6,4 @@ from jclub.apps.meetings.models import Meeting,TimeSlot,Category
 admin.site.register(Meeting)
 admin.site.register(TimeSlot)
 admin.site.register(Category)
+

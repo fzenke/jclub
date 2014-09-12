@@ -39,7 +39,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #'django_tequila',
     'jclub.apps.meetings',
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -49,7 +51,18 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'django_tequila.middleware.TequilaMiddleware',
 )
+
+# Django tequila settings
+###########################
+# AUTHENTICATION_BACKENDS = ('django_tequila.django_backend.TequilaBackend',)
+# TEQUILA_SERVICE_NAME = "EPFL Tequila Login"
+# LOGIN_URL = "/login"
+# LOGIN_REDIRECT_URL = "/"
+# LOGIN_REDIRECT_IF_NOT_ALLOWED = "/not_allowed"
+# AUTH_PROFILE_MODULE = "my_app.userprofile"
+###########################
 
 
 ROOT_URLCONF = 'jclub.urls'
