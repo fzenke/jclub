@@ -13,3 +13,9 @@ body {
 .btn.overview {
 	margin-right:4px;
 }
+
+
+tr.d0 td {
+	background-color: #F0F0F0; color: black;
+	}
+

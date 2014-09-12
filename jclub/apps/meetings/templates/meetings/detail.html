@@ -1,20 +1,22 @@
-<!DOCTYPE html>
-{% load staticfiles %}
-<html>
-	<head>
-		<title>Journal Clubs -- Home</title>
-		<link rel="stylesheet" type="text/css" href="{% static 'meetings/style.css' %}" />
-	</head>
-<body>
+{% extends "index.html" %}
 
-	<table border="0">
-		<tr><td>Date/Time/Place</td> <td> <b>{{ meeting.timeslot }}</b> at {{ meeting.location }} </td></tr>
+<!DOCTYPE html>
+
+{% block title %}LCN Journal Club: Meeting details {% endblock %}
+
+{% block content %}
+
+	<p>
+
+	<table border="0" width="600">
+		<tr class="d0"><td>Date/Time/Place</td> <td> <b>{{ meeting.timeslot }}</b> at {{ meeting.location }} </td></tr>
 		<tr><td>Presenter</td>       <td> {{ meeting.presenter }}</td></tr>
-		<tr><td>Categories</td>      <td> {% for cat in meeting.publication_category.all %} {{ cat.name }} {% empty %} uncategorized {% endfor %} </td></tr>
-		<tr><td>Publication</td>     <td> {{ meeting.publication_ref }}</td></tr>
-		<tr><td>Full text</td>       <td> <a href="{{ meeting.publication_url }}"> {{ meeting.publication_url }}</a> </td></tr>
+		<tr class="d0"><td>Categories</td>      <td> {% for cat in meeting.publication_category.all %} {{ cat.name }} {% empty %} uncategorized {% endfor %} </td></tr>
+		<tr><td>Publication</td>     <td> {{ meeting.publication_reference }}</td></tr>
+		<tr class="d0"><td>Full text</td>       <td> <a href="{{ meeting.publication_url }}"> {{ meeting.publication_url }}</a> </td></tr>
 	</table>
+	</p>
 
 	<p><a href="/meetings/">back</a></p>
-</body>
-</html>
+
+{% endblock %}
