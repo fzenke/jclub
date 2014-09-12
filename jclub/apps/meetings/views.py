@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 
-from meetings.models import Meeting,TimeSlot
+from jclub.apps.meetings.models import Meeting,TimeSlot
 
 # Create your views here.
 
@@ -13,6 +13,7 @@ def index(request):
 
 
     template = loader.get_template('meetings/index.html')
+    print "aha", template
     context = RequestContext(request, {
         'upcoming_meetings_list': upcoming_meetings_list,
         'upcoming_timeslots_list': upcoming_timeslots_list,
