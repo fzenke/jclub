@@ -16,7 +16,7 @@ def index(request):
     upcoming_meetings_list = Meeting.objects.filter(timeslot__date_time__gte=current_day).order_by('timeslot__date_time')[:3]
     
     # get untaken timeslots and order by date
-    upcoming_timeslots_list = TimeSlot.objects.filter(meeting__isnull=True).order_by('meeting__timeslot__date_time')[:3]
+    upcoming_timeslots_list = TimeSlot.objects.filter(meeting__isnull=True).order_by('date_time')[:3]
     
     # get 1) presenters that are not assigned to a slot 2) that presented the longest ago
     upcoming_presenters_list_empty = User.objects.filter(meeting__isnull=True)[:5]
