@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 
-from meetings import views
+from jclub.apps.meetings import views
 
 urlpatterns = patterns('',
     

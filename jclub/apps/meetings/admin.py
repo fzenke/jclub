@@ -1,5 +1,5 @@
 from django.contrib import admin
-from meetings.models import Meeting,TimeSlot,Category
+from jclub.apps.meetings.models import Meeting,TimeSlot,Category
 
 # Register your models here.
 
