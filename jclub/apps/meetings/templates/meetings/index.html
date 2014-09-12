@@ -1,20 +1,17 @@
+<!DOCTYPE html>
+{% load staticfiles %}
 <html>
 	<head>
 		<title>Journal Clubs -- Home</title>
+		<link rel="stylesheet" type="text/css" href="{% static 'meetings/style.css' %}" />
 	</head>
 <body>
 
 <h2>Upcoming journal clubs</h2>
 {% if upcoming_meetings_list %}
-    <p>
 	{% for meeting in upcoming_meetings_list %}
-	<a href="/meetings/{{ meeting.id }}/">{{ meeting.timeslot }}</a> {{meeting.presenter}} [
-	{% for cat in meeting.publication_category.all %}
-	    {{ cat.name }}
-	{% empty %}
-		uncategorized
-	{% endfor %}
-	] <br/>
+	<p> 
+	<a href="/meetings/{{ meeting.id }}/">{{ meeting.timeslot }}</a> {{meeting.presenter}} [ {% for cat in meeting.publication_category.all %} {{ cat.name }} {% empty %} uncategorized {% endfor %} ] <br/>
 	{{ meeting.publication_reference }} 
 	<a href="{{ meeting.publication_url }}">full text</a>
 	</p>
