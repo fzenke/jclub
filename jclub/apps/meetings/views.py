@@ -38,5 +38,12 @@ def index(request):
     return HttpResponse(template.render(context))
 
 def detail(request, meeting_id):
-    return HttpResponse("You're looking at the TODO detail view of meeting %s." % meeting_id)
+
+    template = loader.get_template('meetings/detail.html')
+
+    meeting = Meeting.objects.get(id=meeting_id)
+    context = RequestContext(request, {
+        'meeting': meeting,
+    })
+    return HttpResponse(template.render(context))
 
