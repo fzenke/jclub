@@ -1,26 +1,28 @@
+<!DOCTYPE html>
+{% load staticfiles %}
 <html>
 	<head>
 		<title>Journal Clubs -- Home</title>
+		<link rel="stylesheet" type="text/css" href="{% static 'meetings/style.css' %}" />
 	</head>
 <body>
 
 <h2>Upcoming journal clubs</h2>
 {% if upcoming_meetings_list %}
-    <dl>
 	{% for meeting in upcoming_meetings_list %}
-	<dt><a href="/meetings/{{ meeting.id }}/">{{ meeting.timeslot }}</a> {{meeting.presenter}}</dt>
-	<dd>
-	{{meeting.publication_reference}}
+	<p> 
+	<a href="/meetings/{{ meeting.id }}/">{{ meeting.timeslot }}</a> {{meeting.presenter}} [ {% for cat in meeting.publication_category.all %} {{ cat.name }} {% empty %} uncategorized {% endfor %} ] <br/>
+	{{ meeting.publication_reference }} 
+	<a href="{{ meeting.publication_url }}">full text</a>
+	</p>
 	<!-- add links to user stats -->
-	</dd>
-	</li>
 	{% endfor %}
-	</dl>
 {% else %}
 	<p>No meetings are available.</p>
 {% endif %}
 
 <h2>Next slots and presenters</h2>
+To sign up please <a href="/admin/">log in</a> and create a new meeting.
 <table>
 	<tr>
 		<td>
