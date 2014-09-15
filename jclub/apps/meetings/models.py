@@ -7,6 +7,8 @@ class Category(models.Model):
       def __unicode__(self):
           return self.name
 
+      class Meta:
+        verbose_name_plural = "categories"
 
 class TimeSlot(models.Model):
       date_time = models.DateTimeField('date and time')
