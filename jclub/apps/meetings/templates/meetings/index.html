@@ -15,7 +15,7 @@
 	<div class="col-md-4">
 		<div class="panel panel-default">
 		  <div class="panel-heading">
-		    <h3 class="panel-title"><a href="/meetings/{{ meeting.id }}/">{{ meeting.timeslot }}: {{meeting.presenter.first_name}} {{meeting.presenter.last_name}}</a></h3>
+		    <h3 class="panel-title"><a href="/meetings/{{ meeting.id }}/">{{ meeting.timeslot.date_time | date:"D, d. M @ P" }}: {{meeting.presenter.first_name}} {{meeting.presenter.last_name}}</a></h3>
 		  </div>
 		  <div class="panel-body">
 				<p>
@@ -45,7 +45,7 @@ To claim a slot, please <a href="/admin/">log in</a> and create a new meeting.
 		  <div class="panel-body">
 		  		{% if upcoming_timeslots_list %}
 					{% for timeslot in upcoming_timeslots_list %}
-						<a href="#"><button type="button" class="overview btn btn-default pull-left">{{ timeslot.date_time}}</button></a>
+						<a href="#"><button type="button" class="overview btn btn-default pull-left">{{ timeslot.date_time | date:"D, d. M @ P"}}</button></a>
 					{% endfor %}
 					
 				{% else %}
