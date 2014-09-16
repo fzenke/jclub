@@ -5,6 +5,8 @@
 {% block title %}LCN Journal Club: Meeting details {% endblock %}
 
 {% block content %}
+	
+	{% if meeting %}
 
 	<p>
 
@@ -18,5 +20,7 @@
 	</p>
 
 	<p><a href="/meetings/">back</a></p>
+
+	{% endif %}
 
 {% endblock %}
