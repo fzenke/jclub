@@ -47,3 +47,19 @@ def detail(request, meeting_id):
     })
     return HttpResponse(template.render(context))
 
+
+def meetings_index(request):
+
+    current_day = datetime.now()
+    current_day.replace(hour=0, minute=0, second=0, microsecond=0)
+
+    upcoming_meetings_list = Meeting.objects.filter(timeslot__date_time__gte=current_day).order_by('timeslot__date_time')
+    past_meetings_list = Meeting.objects.filter(timeslot__date_time__lt=current_day).order_by('-timeslot__date_time')
+    
+    template = loader.get_template('meetings/index.html')
+    
+    context = RequestContext(request, {
+        'upcoming_meetings_list': upcoming_meetings_list,
+        'past_meetings_list': past_meetings_list,
+    })
+    return HttpResponse(template.render(context))

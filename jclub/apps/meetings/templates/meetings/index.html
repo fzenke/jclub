@@ -2,10 +2,9 @@
 
 <!DOCTYPE html>
 
-{% block title %}LCN Journal Club: Central{% endblock %}
+{% block title %}Journal Club: All meetings{% endblock %}
 
 {% block content %}
-
 
 <h2>Upcoming journal clubs</h2>
 <div class="row">
@@ -29,54 +28,36 @@
 	<!-- add links to user stats -->
 	{% endfor %}
 {% else %}
-	<p>No upcoming meetings available.</p>
+	<p>No meetings available.</p>
 {% endif %}
 </div>
 
-<hr/>
-To claim a slot, please <a href="/admin/">log in</a> and create a new meeting.
 
+<h2>Past journal clubs</h2>
+<p>(newest first)</p>
 <div class="row">
-	<div class="col-md-6">
-		<div class="panel panel-info">
+{% if past_meetings_list %}
+	{% for meeting in past_meetings_list %}
+	
+	<div class="col-md-4">
+		<div class="panel panel-default">
 		  <div class="panel-heading">
-		    <h3 class="panel-title">Free slots</h3>
+		    <h3 class="panel-title"><a href="/meetings/{{ meeting.id }}/">{{ meeting.timeslot.date_time | date:"D, d. M @ P" }}: {{meeting.presenter.first_name}} {{meeting.presenter.last_name}}</a></h3>
 		  </div>
 		  <div class="panel-body">
-		  		{% if upcoming_timeslots_list %}
-					{% for timeslot in upcoming_timeslots_list %}
-						<a href="#"><button type="button" class="overview btn btn-default pull-left">{{ timeslot.date_time | date:"D, d. M @ P"}}</button></a>
-					{% endfor %}
-					
-				{% else %}
-					<p>No timeslots are available.</p>
-				{% endif %}
+				<p>
+					{{ meeting.publication_reference }} <small> [ {% for cat in meeting.publication_category.all %} {{ cat.name }} {% empty %} uncategorized {% endfor %} ] </small>
+					<p><small>{{meeting.location}} | <strong><a href="{{ meeting.publication_url }}">full text &raquo;</a></strong></small></p>
+				</p>
 		  </div>
 		</div>
 	</div>
-	<div class="col-md-6">
-		<div class="panel panel-info">
-		  <div class="panel-heading">
-		    <h3 class="panel-title">Pending presenters</h3>
-		  </div>
-		  <div class="panel-body">
-				{% if upcoming_presenters_list %}
-					{% for presenter in upcoming_presenters_list %}
-					<a href="#"><button type="button" class="overview btn btn-default pull-left">
-					{{ forloop.counter }}. 
-					{% if presenter.first_name %}
-						{{presenter.first_name}} {{presenter.last_name}}
-					{% else %}
-						{{presenter.username}}
-					{% endif %}
-					</button></a>					
-					{% endfor %}
-				{% else %}
-					<p>No presenters are available.</p>
-				{% endif %}
-		  </div>
-		</div>
-	</div>
+
+	<!-- add links to user stats -->
+	{% endfor %}
+{% else %}
+	<p>No meetings available.</p>
+{% endif %}
 </div>
 
 {% endblock %}
