@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+
+<!DOCTYPE html>
+
+{% block title %}LCN Journal Club: Presenter details {% endblock %}
+
+{% block content %}
+
+	{% if presenter %}
+		
+		{{ presenter.id }}
+
+	{% endif %}
+
+{% endblock %}
