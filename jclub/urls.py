@@ -8,7 +8,6 @@ urlpatterns = patterns('',
     # url(r'^$', 'jclub.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^meetings/', include('jclub.apps.meetings.urls')),
     url(r'^', include('jclub.apps.meetings.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )

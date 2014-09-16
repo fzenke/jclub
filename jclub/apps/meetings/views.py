@@ -28,7 +28,7 @@ def index(request):
     upcoming_presenters_list_given = User.objects.filter(meeting__isnull=False).order_by("meeting__timeslot__date_time")
     upcoming_presenters_list = (list(upcoming_presenters_list_empty) + list(upcoming_presenters_list_given))[:5]
 
-    template = loader.get_template('meetings/index.html')
+    template = loader.get_template('index.html')
     
     context = RequestContext(request, {
         'upcoming_meetings_list': upcoming_meetings_list,
