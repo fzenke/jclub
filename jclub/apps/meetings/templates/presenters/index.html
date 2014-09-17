@@ -14,7 +14,7 @@
 			{% for presenter in presenters %}
 				
 				<a href="{% url 'presenters_detail' presenter.id %}"><button type="button" class="overview btn btn-default pull-left">
-				<small><strong>{{ presenter.meetings_count }}</strong></small>
+				<small><span class="label label-info">{{ presenter.meetings_count }}</span></small>
                 {% if presenter.first_name %}
                   {{presenter.first_name}} {{presenter.last_name}}
                 {% else %}
