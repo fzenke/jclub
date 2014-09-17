@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<h2>Upcoming journal clubs</h2>
+<div class="page-header"><h2>Upcoming journal clubs</h2></div>
 <div class="row">
 {% if upcoming_meetings_list %}
 	{% for meeting in upcoming_meetings_list %}
@@ -33,8 +33,7 @@
 </div>
 
 
-<h2>Past journal clubs</h2>
-<p>(newest first)</p>
+<div class="page-header"><h2>Past journal clubs <small>newest first</small></h2></div>
 <div class="row">
 {% if past_meetings_list %}
 	{% for meeting in past_meetings_list %}

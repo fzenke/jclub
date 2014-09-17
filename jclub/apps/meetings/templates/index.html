@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load admin_urls %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -68,7 +69,7 @@
     <div class="container">
       {% block content %}
 
-      <h2>Upcoming journal clubs</h2>
+      <div class="page-header"><h2>Upcoming journal clubs</h2></div>
       <div class="row">
       {% if upcoming_meetings_list %}
         {% for meeting in upcoming_meetings_list %}
@@ -76,7 +77,7 @@
         <div class="col-md-4">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title"><a href="/meetings/{{ meeting.id }}/">{{ meeting.timeslot.date_time | date:"D, d. M @ P" }}: {{meeting.presenter.first_name}} {{meeting.presenter.last_name}}</a></h3>
+              <h3 class="panel-title"><a href="{% url 'meetings_detail' meeting.id %}">{{ meeting.timeslot.date_time | date:"D, d. M @ P" }}: {{meeting.presenter.first_name}} {{meeting.presenter.last_name}}</a></h3>
             </div>
             <div class="panel-body">
               <p>
@@ -95,7 +96,7 @@
   </div>
 
       <hr/>
-      To claim a slot, please <a href="/admin/">log in</a> and create a new meeting.
+      <small>To claim a slot, please <a href="{% url 'admin:meetings_meeting_add' %}">log in and create a new meeting</a>.</small>
 
       <div class="row">
         <div class="col-md-6">
@@ -106,7 +107,7 @@
             <div class="panel-body">
                 {% if upcoming_timeslots_list %}
                 {% for timeslot in upcoming_timeslots_list %}
-                  <a href="#"><button type="button" class="overview btn btn-default pull-left">{{ timeslot.date_time | date:"D, d. M @ P"}}</button></a>
+                  <a href="{% url 'admin:meetings_meeting_add' %}"><button type="button" class="overview btn btn-default pull-left">{{ timeslot.date_time | date:"D, d. M @ P"}}</button></a>
                 {% endfor %}
                 
               {% else %}
