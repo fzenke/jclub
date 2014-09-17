@@ -18,6 +18,7 @@
 	</div>
 
 	{% if meeting %}
+	<p><a href="{% url 'admin:meetings_meeting_change' meeting.id %}"><span class="glyphicon glyphicon-wrench"></span> edit meeting</a></p>
 
 	<div class="row">
 		<div class="col-md-10">
@@ -49,7 +50,7 @@
 			</div>
 		</div>
 	</div>
-	<p><strong><a href="javascript: window.history.go(-1);">&laquo; back</a></strong></p>
+	<p><strong><a href="javascript: window.history.go(-1);"><span class="glyphicon glyphicon-chevron-left"></span> back to overview</a></strong></p>
 
 	{% endif %}
 
