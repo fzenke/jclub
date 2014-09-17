@@ -5,6 +5,8 @@ from jclub.apps.meetings.models import Meeting,TimeSlot
 from django.contrib.auth.models import User
 from datetime import *
 from collections import OrderedDict
+from django.shortcuts import get_object_or_404
+from django.db.models import Count
 
 # Create your views here.
 
@@ -47,7 +49,6 @@ def detail(request, meeting_id):
     })
     return HttpResponse(template.render(context))
 
-
 def meetings_index(request):
 
     current_day = datetime.now()
@@ -63,3 +64,28 @@ def meetings_index(request):
         'past_meetings_list': past_meetings_list,
     })
     return HttpResponse(template.render(context))
+
+def presenters_index(request):
+    template = loader.get_template('presenters/index.html')
+
+    presenters = User.objects.all().annotate(meetings_count=Count('meeting__id')).order_by('-meetings_count', 'last_name')
+    context = RequestContext(request, {
+        'presenters': presenters,
+    })
+
+    return HttpResponse(template.render(context))
+
+def presenters_detail(request, user_id):
+    template = loader.get_template('presenters/detail.html')
+
+    presenter = get_object_or_404(User,id=user_id)
+    meetings =  presenter.meeting_set.all()
+    meetings_count = len(meetings)
+    context = RequestContext(request, {
+        'presenter': presenter,
+        'meetings': meetings,
+        'meetings_count': meetings_count,
+    })
+
+    return HttpResponse(template.render(context))
+

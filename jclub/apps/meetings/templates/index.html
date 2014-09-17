@@ -45,6 +45,7 @@
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li><a href="{% url 'meetings_index' %}">Meetings</a></li>
+            <li><a href="{% url 'presenters_index' %}">Presenters</a></li>
             <!-- <li><a href="papers/">Papers</a></li>
             <li><a href="users/">Users</a></li> -->
             
@@ -116,7 +117,7 @@
             <div class="panel-body">
               {% if upcoming_presenters_list %}
                 {% for presenter in upcoming_presenters_list %}
-                <a href="#"><button type="button" class="overview btn btn-default pull-left">
+                <a href="{% url 'presenters_detail' presenter.id %}"><button type="button" class="overview btn btn-default pull-left">
                 {{ forloop.counter }}. 
                 {% if presenter.first_name %}
                   {{presenter.first_name}} {{presenter.last_name}}

@@ -30,7 +30,7 @@
 					</tr>
 					<tr>
 						<td><strong>Presenter</strong></td>
-						<td>{{ meeting.presenter.first_name }} {{ meeting.presenter.last_name }}</td>
+						<td><a href="{% url 'presenters_detail' meeting.presenter.id %}">{{ meeting.presenter.first_name }} {{ meeting.presenter.last_name }}</a></td>
 					</tr>
 					<tr>
 						<td><strong>Categories</strong></td>
