@@ -124,7 +124,7 @@
             <div class="panel-body">
               {% if upcoming_presenters_list %}
                 {% for presenter in upcoming_presenters_list %}
-                <a href="#"><button type="button" class="overview btn btn-default pull-left">
+                <a href="{% url 'presenters_detail' presenter.id %}"><button type="button" class="overview btn btn-default pull-left">
                 {{ forloop.counter }}. 
                 {% if presenter.first_name %}
                   {{presenter.first_name}} {{presenter.last_name}}
