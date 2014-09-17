@@ -13,7 +13,7 @@ class Category(models.Model):
 class TimeSlot(models.Model):
       date_time = models.DateTimeField('date and time')
       def __unicode__(self):
-          return self.date_time.strftime('%Y-%m-%d %H:%M')
+          return self.date_time.strftime('%a, %d.%m.%Y @ %H:%M')
       
 
 class Meeting(models.Model):
@@ -24,5 +24,5 @@ class Meeting(models.Model):
       publication_url       = models.CharField(max_length=200)
       publication_category  = models.ManyToManyField(Category)
       def __unicode__(self):
-          return "%s/%s"%(self.timeslot,self.presenter)
+          return u'%s: %s %s' % (self.timeslot.date_time.strftime('%a, %d.%m.%Y @ %H:%M'), self.presenter.first_name, self.presenter.last_name)
 
