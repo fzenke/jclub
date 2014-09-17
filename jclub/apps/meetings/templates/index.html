@@ -69,37 +69,29 @@
     <div class="container">
       {% block content %}
 
-      <div class="page-header"><h2>Upcoming journal clubs</h2></div>
+      <div class="page-header"><h2>Journal Club Overview</h2></div>
       <div class="row">
-      {% if upcoming_meetings_list %}
-        {% for meeting in upcoming_meetings_list %}
-        
+
         <div class="col-md-4">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title"><a href="{% url 'meetings_detail' meeting.id %}">{{ meeting.timeslot.date_time | date:"D, d. M @ P" }}: {{meeting.presenter.first_name}} {{meeting.presenter.last_name}}</a></h3>
+               <h3 class="panel-title">Upcoming meetings</h3>
             </div>
             <div class="panel-body">
-              <p>
-                {{ meeting.publication_reference }} <small> [ {% for cat in meeting.publication_category.all %} {{ cat.name }} {% empty %} uncategorized {% endfor %} ] </small>
-                <p><small>{{meeting.location}} | <strong><a href="{{ meeting.publication_url }}">full text &raquo;</a></strong></small></p>
-              </p>
+
+              {% if upcoming_meetings_list %}
+                {% for meeting in upcoming_meetings_list %}
+                
+                <a href="{% url 'meetings_detail' meeting.id %}"><button type="button" class="overview btn btn-default pull-left">{{ timeslot.date_time | date:"D, d. M @ P"}}{{ meeting.timeslot.date_time | date:"d. M @ P" }} <small>{% for cat in meeting.publication_category.all %} <span class="label label-info">{{ cat.name }}</span> {% empty %} uncategorized {% endfor %}</small></button></a>
+
+                {% endfor %}
+              {% else %}
+                <p>No upcoming meetings available.</p>
+              {% endif %}
             </div>
           </div>
         </div>
-
-        <!-- add links to user stats -->
-        {% endfor %}
-      {% else %}
-        <p>No upcoming meetings available.</p>
-      {% endif %}
-  </div>
-
-      <hr/>
-      <small>To claim a slot, please <a href="{% url 'admin:meetings_meeting_add' %}">log in and create a new meeting</a>.</small>
-
-      <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="panel panel-info">
             <div class="panel-heading">
               <h3 class="panel-title">Free slots</h3>
@@ -116,8 +108,8 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="panel panel-info">
+        <div class="col-md-4">
+          <div class="panel panel-danger">
             <div class="panel-heading">
               <h3 class="panel-title">Pending presenters</h3>
             </div>
@@ -139,6 +131,13 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <hr/>
+      <small>To claim a slot, please <a href="{% url 'admin:meetings_meeting_add' %}">log in and create a new meeting</a>.</small>
+
+      <div class="row">
+        
       </div>
 
 
