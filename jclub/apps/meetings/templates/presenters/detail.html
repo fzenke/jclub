@@ -5,10 +5,34 @@
 {% block title %}LCN Journal Club: Presenter details {% endblock %}
 
 {% block content %}
+	
+	{% if presenter and meetings_count >= 0 %}
 
-	{% if presenter %}
-		
-		{{ presenter.id }}
+		<div class="page-header"><h2>{{presenter.first_name}} {{presenter.last_name}} <small>{{meetings_count}} session{{ meetings_count | pluralize }}</small></h2></div>	
+		<div class="row">
+		{% if meetings_count > 0 %}
+			{% for meeting in meetings %}
+			
+			<div class="col-md-4">
+				<div class="panel panel-default">
+				  <div class="panel-heading">
+				    <h3 class="panel-title"><a href="/meetings/{{ meeting.id }}/">{{ meeting.timeslot.date_time | date:"D, d. M @ P" }}: {{meeting.presenter.first_name}} {{meeting.presenter.last_name}}</a></h3>
+				  </div>
+				  <div class="panel-body">
+						<p>
+							{{ meeting.publication_reference }} <small> [ {% for cat in meeting.publication_category.all %} {{ cat.name }} {% empty %} uncategorized {% endfor %} ] </small>
+							<p><small>{{meeting.location}} | <strong><a href="{{ meeting.publication_url }}">full text &raquo;</a></strong></small></p>
+						</p>
+				  </div>
+				</div>
+			</div>
+
+			<!-- add links to user stats -->
+			{% endfor %}
+		{% else %}
+			<p>No meetings available - <a href="{% url 'admin:meetings_meeting_add' %}">claim a slot</a>.</p>
+		{% endif %}
+		</div>
 
 	{% endif %}
 

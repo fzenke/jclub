@@ -66,9 +66,15 @@ def meetings_index(request):
 
 def presenters_detail(request, user_id):
     template = loader.get_template('presenters/detail.html')
+
     presenter = get_object_or_404(User,id=user_id)
+    meetings =  presenter.meeting_set.all()
+    meetings_count = len(meetings)
     context = RequestContext(request, {
         'presenter': presenter,
+        'meetings': meetings,
+        'meetings_count': meetings_count,
     })
+
     return HttpResponse(template.render(context))
 
