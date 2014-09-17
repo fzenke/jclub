@@ -33,7 +33,9 @@
 			<!-- add links to user stats -->
 			{% endfor %}
 		{% else %}
-			<p>No meetings available - <a href="{% url 'admin:meetings_meeting_add' %}">claim a slot</a>.</p>
+			<div class="col-md-4">
+				<p>No meetings available - <a href="{% url 'admin:meetings_meeting_add' %}">claim a slot</a>.</p>
+			</div>
 		{% endif %}
 		</div>
 
