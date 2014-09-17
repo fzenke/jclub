@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="{% static "img/icon.png" %}">
 
-    <title>{% block title %}LCN Journal Club: Central{% endblock %}</title>
+    <title>{% block title %}{{BRANDING.INSTITUTION}} {{BRANDING.DESC}}: Central{% endblock %}</title>
 
     {% block scripts %}{% endblock %}
 
@@ -40,7 +40,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{% url 'index' %}">LCN Journal Club</a>
+          <a class="navbar-brand" href="{% url 'index' %}">{{BRANDING.INSTITUTION}} {{BRANDING.DESC}}</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -70,7 +70,7 @@
     <div class="container">
       {% block content %}
 
-      <div class="page-header"><h2>Journal Club Overview</h2></div>
+      <div class="page-header"><h2>{{BRANDING.DESC}} Overview</h2></div>
       <div class="row">
 
         <div class="col-md-4">
