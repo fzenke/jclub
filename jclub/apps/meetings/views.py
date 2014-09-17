@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from datetime import *
 from collections import OrderedDict
 from django.shortcuts import get_object_or_404
+from django.db.models import Count
 
 # Create your views here.
 
@@ -62,6 +63,16 @@ def meetings_index(request):
         'upcoming_meetings_list': upcoming_meetings_list,
         'past_meetings_list': past_meetings_list,
     })
+    return HttpResponse(template.render(context))
+
+def presenters_index(request):
+    template = loader.get_template('presenters/index.html')
+
+    presenters = User.objects.all().annotate(meetings_count=Count('meeting__id')).order_by('-meetings_count', 'last_name')
+    context = RequestContext(request, {
+        'presenters': presenters,
+    })
+
     return HttpResponse(template.render(context))
 
 def presenters_detail(request, user_id):

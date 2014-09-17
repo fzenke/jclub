@@ -1,0 +1,29 @@
+{% extends "index.html" %}
+
+<!DOCTYPE html>
+
+{% block title %}LCN Journal Club: Presenters {% endblock %}
+
+{% block content %}
+	
+	{% if presenters.count >= 0 %}
+
+		<div class="page-header"><h2>Presenters <small>{{presenters.count}} registered, most active first</small></h2></div>		
+		<div class="row">
+		
+			{% for presenter in presenters %}
+				
+				<a href="{% url 'presenters_detail' presenter.id %}"><button type="button" class="overview btn btn-default pull-left">
+				<small><strong>{{ presenter.meetings_count }}</strong></small>
+                {% if presenter.first_name %}
+                  {{presenter.first_name}} {{presenter.last_name}}
+                {% else %}
+                  {{presenter.username}}
+                {% endif %}
+                </button></a>        			
+			{% endfor %}
+		</div>
+
+	{% endif %}
+
+{% endblock %}

@@ -8,5 +8,6 @@ urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),
 
     # presenters implied model
+    url(r'^presenters/$', views.presenters_index, name='presenters_index'),
     url(r'^presenters/(?P<user_id>\d+)/$', views.presenters_detail, name='presenters_detail'),
 )
