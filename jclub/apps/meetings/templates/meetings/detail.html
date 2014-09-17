@@ -6,20 +6,50 @@
 
 {% block content %}
 	
+	<div class="page-header">
+		<h2>
+			Meeting
+			{% if meeting %}
+				<small>
+					{{ meeting.timeslot.date_time | date:"D, d. M @ P" }}
+				</small>
+			{% endif %}
+		</h2>
+	</div>
+
 	{% if meeting %}
 
-	<p>
-
-	<table border="0" width="600">
-		<tr class="d0"><td>Date/Time/Place</td> <td> <b>{{ meeting.timeslot }}</b> at {{ meeting.location }} </td></tr>
-		<tr><td>Presenter</td>       <td> {{ meeting.presenter }}</td></tr>
-		<tr class="d0"><td>Categories</td>      <td> {% for cat in meeting.publication_category.all %} {{ cat.name }} {% empty %} uncategorized {% endfor %} </td></tr>
-		<tr><td>Publication</td>     <td> {{ meeting.publication_reference }}</td></tr>
-		<tr class="d0"><td>Full text</td>       <td> <a href="{{ meeting.publication_url }}"> {{ meeting.publication_url }}</a> </td></tr>
-	</table>
-	</p>
-
-	<p><a href="/meetings/">back</a></p>
+	<div class="row">
+		<div class="col-md-10">
+			<div class="table-responsive">
+				<table class="table table-condensed table-striped">
+					<tr>
+						<td><strong>Place</strong></td> 
+						<td> {{ meeting.location }} </td>
+					</tr>
+					<tr>
+						<td><strong>Presenter</strong></td>
+						<td>{{ meeting.presenter.first_name }} {{ meeting.presenter.last_name }}</td>
+					</tr>
+					<tr>
+						<td><strong>Categories</strong></td>
+						<td> 
+							{% if meeting.publication_category.all.count >= 0 %}
+								{{ meeting.publication_category.all | join:", " }}
+							{% else %}
+								uncategorized
+							{% endif %}
+						</td>
+					</tr>
+					<tr>
+						<td><strong>Publication</strong></td>
+						<td><a target="_blank" href="{{ meeting.publication_url }}">{{ meeting.publication_reference }}</a></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	<p><a href="{% url 'meetings_index' %}">back</a></p>
 
 	{% endif %}
 
