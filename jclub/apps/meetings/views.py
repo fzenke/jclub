@@ -20,16 +20,9 @@ def index(request):
     # get untaken timeslots and order by date
     upcoming_timeslots_list = TimeSlot.objects.filter(meeting__isnull=True).order_by('date_time')[:3]
     
-    # get 1) presenters that are not assigned to a slot 2) that presented the longest ago
-    upcoming_presenters_list_empty = User.objects.filter(meeting__isnull=True)
+    # use custom function d_meet to order objects
+    upcoming_presenters_list = sorted(User.objects.all(), key=lambda o: -o.d_meet)[:8]
     
-    # this works on postgresql but sadly not on anything else
-    
-    # upcoming_presenters_list_given = User.objects.filter(meeting__isnull=False).order_by("meeting__timeslot__date_time").distinct('id')[:3]
-    # TODO filter for distinct results here
-    upcoming_presenters_list_given = User.objects.filter(meeting__isnull=False).order_by("meeting__timeslot__date_time")
-    upcoming_presenters_list = (list(upcoming_presenters_list_empty) + list(upcoming_presenters_list_given))[:5]
-
     template = loader.get_template('index.html')
     
     context = RequestContext(request, {

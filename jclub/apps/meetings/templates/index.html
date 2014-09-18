@@ -112,15 +112,15 @@
         <div class="col-md-4">
           <div class="panel panel-danger">
             <div class="panel-heading">
-              <h3 class="panel-title">Pending presenters</h3>
+              <h3 class="panel-title">Pending presenters <small>days since last</small></h3>
             </div>
             <div class="panel-body">
               {% if upcoming_presenters_list %}
                 {% for presenter in upcoming_presenters_list %}
                 <a href="{% url 'presenters_detail' presenter.id %}"><button type="button" class="overview btn btn-default pull-left">
-                {{ forloop.counter }}. 
+                
                 {% if presenter.first_name %}
-                  {{presenter.first_name}} {{presenter.last_name}}
+                  {{presenter.first_name}} {{presenter.last_name}} <small>({{presenter.d_meet_str}})</small>
                 {% else %}
                   {{presenter.username}}
                 {% endif %}

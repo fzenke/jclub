@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
+import datetime
+from django.conf import settings
 
 # Create your models here.
 class Category(models.Model):
@@ -46,3 +49,22 @@ def user_unicode(self):
     else:
         return self.user_name
 User.add_to_class('__unicode__', user_unicode)
+
+def days_since_meeting(self):
+    last_meeting = self.meeting_set.order_by('timeslot__date_time').last()
+    t_delta = timezone.timedelta.max
+    if last_meeting:
+        t_last = last_meeting.timeslot.date_time
+        t_now = timezone.now()    
+        t_delta = t_now - t_last
+    return t_delta.days
+
+def days_since_meeting_str(self):
+    d_meet = days_since_meeting(self)
+    if d_meet == timezone.timedelta.max.days:
+        return str('never')
+    else:
+        return str(d_meet)
+        
+User.add_to_class('d_meet', property(fget=days_since_meeting))
+User.add_to_class('d_meet_str', property(fget=days_since_meeting_str))
