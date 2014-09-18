@@ -12,9 +12,12 @@ class Category(models.Model):
 
 class TimeSlot(models.Model):
       date_time = models.DateTimeField('date and time')
+      
       def __unicode__(self):
           return self.date_time.strftime('%a, %d.%m.%Y @ %H:%M')
-      
+
+      class Meta:
+          ordering = ["date_time"]      
 
 class Meeting(models.Model):
       presenter = models.ForeignKey(User, unique=False)
