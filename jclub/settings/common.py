@@ -89,3 +89,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     normpath(join(DJANGO_ROOT, 'assets')),
 )
+
+TEMPLATE_DIRS = (
+    normpath(join(DJANGO_ROOT, 'templates')),
+)
