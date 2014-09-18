@@ -2,20 +2,49 @@
 
 <!DOCTYPE html>
 
-{% block title %}LCN Journal Club: Central{% endblock %}
+{% block title %}Journal Club: All meetings{% endblock %}
 
 {% block content %}
 
-
-<h2>Upcoming journal clubs</h2>
+<div class="page-header"><h2>Upcoming journal clubs</h2></div>
 <div class="row">
 {% if upcoming_meetings_list %}
 	{% for meeting in upcoming_meetings_list %}
 	
+        <div class="col-md-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><a href="{% url 'meetings_detail' meeting.id %}">{{ meeting.timeslot.date_time | date:"D, d. M @ P" }}, {{meeting.presenter.first_name}} {{meeting.presenter.last_name}}</a></h3>
+            </div>
+            <div class="panel-body">
+              <p>
+                <a  target="_blank" href="{{ meeting.publication_url }}"> {{ meeting.publication_reference }}</a>
+              </p>
+              <p>
+                 {% for cat in meeting.publication_category.all %} <span class="label label-info">{{ cat.name }}</span> {% empty %} uncategorized {% endfor %}
+              </p>
+              <p><small>@ {{meeting.location}}</small></p>
+            </div>
+          </div>
+        </div>
+
+	<!-- add links to user stats -->
+	{% endfor %}
+{% else %}
+	<p>No meetings available.</p>
+{% endif %}
+</div>
+
+
+<div class="page-header"><h2>Past journal clubs <small>newest first</small></h2></div>
+<div class="row">
+{% if past_meetings_list %}
+	{% for meeting in past_meetings_list %}
+	
 	<div class="col-md-4">
 		<div class="panel panel-default">
 		  <div class="panel-heading">
-		    <h3 class="panel-title"><a href="/meetings/{{ meeting.id }}/">{{ meeting.timeslot }}: {{meeting.presenter}}</a></h3>
+		    <h3 class="panel-title"><a href="/meetings/{{ meeting.id }}/">{{ meeting.timeslot.date_time | date:"D, d. M @ P" }}: {{meeting.presenter.first_name}} {{meeting.presenter.last_name}}</a></h3>
 		  </div>
 		  <div class="panel-body">
 				<p>
@@ -29,47 +58,8 @@
 	<!-- add links to user stats -->
 	{% endfor %}
 {% else %}
-	<p>No upcoming meetings available.</p>
+	<p>No meetings available.</p>
 {% endif %}
-</div>
-
-<hr/>
-To sign up please <a href="/admin/">log in</a> and create a new meeting.
-
-<div class="row">
-	<div class="col-md-6">
-		<div class="panel panel-info">
-		  <div class="panel-heading">
-		    <h3 class="panel-title">Free slots</h3>
-		  </div>
-		  <div class="panel-body">
-		  		{% if upcoming_timeslots_list %}
-					{% for timeslot in upcoming_timeslots_list %}
-						<a href="#"><button type="button" class="overview btn btn-default pull-left">{{ timeslot.date_time}}</button></a>
-					{% endfor %}
-					
-				{% else %}
-					<p>No timeslots are available.</p>
-				{% endif %}
-		  </div>
-		</div>
-	</div>
-	<div class="col-md-6">
-		<div class="panel panel-info">
-		  <div class="panel-heading">
-		    <h3 class="panel-title">Free presenters</h3>
-		  </div>
-		  <div class="panel-body">
-				{% if upcoming_presenters_list %}
-					{% for presenter in upcoming_presenters_list %}
-						<a href="#"><button type="button" class="overview btn btn-default pull-left">{{ presenter.username }}</button></a>					
-					{% endfor %}
-				{% else %}
-					<p>No presenters are available.</p>
-				{% endif %}
-		  </div>
-		</div>
-	</div>
 </div>
 
 {% endblock %}

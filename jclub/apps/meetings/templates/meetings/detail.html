@@ -1,20 +1,57 @@
+{% extends "index.html" %}
+
 <!DOCTYPE html>
-{% load staticfiles %}
-<html>
-	<head>
-		<title>Journal Clubs -- Home</title>
-		<link rel="stylesheet" type="text/css" href="{% static 'meetings/style.css' %}" />
-	</head>
-<body>
 
-	<table border="0">
-		<tr><td>Date/Time/Place</td> <td> <b>{{ meeting.timeslot }}</b> at {{ meeting.location }} </td></tr>
-		<tr><td>Presenter</td>       <td> {{ meeting.presenter }}</td></tr>
-		<tr><td>Categories</td>      <td> {% for cat in meeting.publication_category.all %} {{ cat.name }} {% empty %} uncategorized {% endfor %} </td></tr>
-		<tr><td>Publication</td>     <td> {{ meeting.publication_ref }}</td></tr>
-		<tr><td>Full text</td>       <td> <a href="{{ meeting.publication_url }}"> {{ meeting.publication_url }}</a> </td></tr>
-	</table>
+{% block title %}LCN Journal Club: Meeting details {% endblock %}
 
-	<p><a href="/meetings/">back</a></p>
-</body>
-</html>
+{% block content %}
+	
+	<div class="page-header">
+		<h2>
+			Meeting
+			{% if meeting %}
+				<small>
+					{{ meeting.timeslot.date_time | date:"D, d. M @ P" }}
+				</small>
+			{% endif %}
+		</h2>
+	</div>
+
+	{% if meeting %}
+	<p><a href="{% url 'admin:meetings_meeting_change' meeting.id %}"><span class="glyphicon glyphicon-wrench"></span> edit meeting</a></p>
+
+	<div class="row">
+		<div class="col-md-10">
+			<div class="table-responsive">
+				<table class="table table-condensed table-striped">
+					<tr>
+						<td><strong>Place</strong></td> 
+						<td> {{ meeting.location }} </td>
+					</tr>
+					<tr>
+						<td><strong>Presenter</strong></td>
+						<td><a href="{% url 'presenters_detail' meeting.presenter.id %}">{{ meeting.presenter.first_name }} {{ meeting.presenter.last_name }}</a></td>
+					</tr>
+					<tr>
+						<td><strong>Categories</strong></td>
+						<td> 
+							{% if meeting.publication_category.all.count >= 0 %}
+								{{ meeting.publication_category.all | join:", " }}
+							{% else %}
+								uncategorized
+							{% endif %}
+						</td>
+					</tr>
+					<tr>
+						<td><strong>Publication</strong></td>
+						<td><a target="_blank" href="{{ meeting.publication_url }}">{{ meeting.publication_reference }}</a></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	<p><strong><a href="javascript: window.history.go(-1);"><span class="glyphicon glyphicon-chevron-left"></span> back to overview</a></strong></p>
+
+	{% endif %}
+
+{% endblock %}

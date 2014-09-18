@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from os.path import abspath, basename, dirname, join, normpath
 from sys import path
+from branding import *
+
 # ######### PATH CONFIGURATION
 # Absolute filesystem path to the Django project directory:
 DJANGO_ROOT = dirname(dirname(abspath(__file__)))
@@ -40,8 +42,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #'django_tequila',
+    'south',
     'jclub.apps.meetings',
-
 )
 
 MIDDLEWARE_CLASSES = (
@@ -52,6 +54,11 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #'django_tequila.middleware.TequilaMiddleware',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "jclub.apps.meetings.context_processors.branding",
 )
 
 # Django tequila settings
@@ -94,4 +101,8 @@ STATIC_URL = '/static/'
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = (
     normpath(join(DJANGO_ROOT, 'assets')),
+)
+
+TEMPLATE_DIRS = (
+    normpath(join(DJANGO_ROOT, 'templates')),
 )

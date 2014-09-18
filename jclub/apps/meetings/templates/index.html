@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load admin_urls %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="{% static "img/icon.png" %}">
 
-    <title>{% block title %}Journal club tool{% endblock %}</title>
+    <title>{% block title %}{{BRANDING.INSTITUTION}} {{BRANDING.DESC}}: Central{% endblock %}</title>
 
     {% block scripts %}{% endblock %}
 
@@ -39,13 +40,15 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">LCN Journal Club</a>
+          <a class="navbar-brand" href="{% url 'index' %}">{{BRANDING.INSTITUTION}} {{BRANDING.DESC}}</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="meetings/">Meetings</a></li>
-            <li><a href="papers/">Papers</a></li>
-            <li><a href="users/">Users</a></li>
+            <li><a href="{% url 'meetings_index' %}">Meetings</a></li>
+            <li><a href="{% url 'presenters_index' %}">Presenters</a></li>
+            <!-- <li><a href="papers/">Papers</a></li>
+            <li><a href="users/">Users</a></li> -->
+            
             <!--
             <li><a href="#contact">Contact</a></li>
             <li class="dropdown">
@@ -67,7 +70,77 @@
     <div class="container">
       {% block content %}
 
-      Hello jclub.
+      <div class="page-header"><h2>{{BRANDING.DESC}} Overview</h2></div>
+      <div class="row">
+
+        <div class="col-md-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+               <h3 class="panel-title">Upcoming meetings</h3>
+            </div>
+            <div class="panel-body">
+
+              {% if upcoming_meetings_list %}
+                {% for meeting in upcoming_meetings_list %}
+                
+                <a href="{% url 'meetings_detail' meeting.id %}"><button type="button" class="overview btn btn-default pull-left">{{ timeslot.date_time | date:"D, d. M @ P"}}{{ meeting.timeslot.date_time | date:"d. M @ P" }} <small>{% for cat in meeting.publication_category.all %} <span class="label label-info">{{ cat.name }}</span> {% empty %} uncategorized {% endfor %}</small></button></a>
+
+                {% endfor %}
+              {% else %}
+                <p>No upcoming meetings available.</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">Free slots</h3>
+            </div>
+            <div class="panel-body">
+                {% if upcoming_timeslots_list %}
+                {% for timeslot in upcoming_timeslots_list %}
+                  <a href="{% url 'admin:meetings_meeting_add' %}"><button type="button" class="overview btn btn-default pull-left">{{ timeslot.date_time | date:"D, d. M @ P"}}</button></a>
+                {% endfor %}
+                
+              {% else %}
+                <p>No timeslots are available.</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="panel panel-danger">
+            <div class="panel-heading">
+              <h3 class="panel-title">Pending presenters</h3>
+            </div>
+            <div class="panel-body">
+              {% if upcoming_presenters_list %}
+                {% for presenter in upcoming_presenters_list %}
+                <a href="{% url 'presenters_detail' presenter.id %}"><button type="button" class="overview btn btn-default pull-left">
+                {{ forloop.counter }}. 
+                {% if presenter.first_name %}
+                  {{presenter.first_name}} {{presenter.last_name}}
+                {% else %}
+                  {{presenter.username}}
+                {% endif %}
+                </button></a>         
+                {% endfor %}
+              {% else %}
+                <p>No presenters are available.</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr/>
+      <small>To claim a slot, please <a href="{% url 'admin:index' %}">log in and create a new meeting</a>.</small>
+
+      <div class="row">
+        
+      </div>
+
 
       {% endblock %}
     </div>
