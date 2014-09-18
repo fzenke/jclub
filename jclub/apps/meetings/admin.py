@@ -2,6 +2,7 @@ from django.contrib import admin
 from jclub.apps.meetings.models import Meeting,TimeSlot,Category
 from jclub.apps.meetings.forms import MeetingAdminForm
 from django.db.models import Q
+import datetime
 
 # Custom admin backend form - this restricts the timeslots dropdown 
 # to only the ones not assigned to a meeting, as well as the users for non-admin users
@@ -24,11 +25,15 @@ class MeetingAdmin(admin.ModelAdmin):
                 idset=[obj.presenter.id]
             form.base_fields['presenter'].queryset = form.base_fields['presenter'].queryset.filter(Q(id=request.user.id) | Q(id__in=idset))
 
-        # restrict timeslots to current + available
+        # restrict timeslots to current + available which are from today+future (or any for superuser)
         idset = []
+        mindate = datetime.datetime.min
+        if not request.user.is_superuser:
+            mindate = datetime.datetime.now()
         if obj:
             idset=[obj.id]
-        form.base_fields['timeslot'].queryset = form.base_fields['timeslot'].queryset.filter(Q(meeting__isnull=True) | Q(meeting__id__in=idset))
+        form.base_fields['timeslot'].queryset = form.base_fields['timeslot'].queryset\
+        .filter(Q(meeting__isnull=True,date_time__gte=mindate) | Q(meeting__id__in=idset))
             
         return form
 
