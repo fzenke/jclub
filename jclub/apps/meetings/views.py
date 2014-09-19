@@ -7,6 +7,10 @@ from datetime import *
 from collections import OrderedDict
 from django.shortcuts import get_object_or_404
 from django.db.models import Count
+from django_cal.views import Events
+from django.conf import settings
+import dateutil.rrule as rrule
+from django.core.urlresolvers import reverse
 
 # Create your views here.
 
@@ -87,3 +91,44 @@ def presenters_detail(request, user_id):
 
     return HttpResponse(template.render(context))
 
+class Calendar(Events):
+
+    def __init__(self, request):
+        super(Calendar, self).__init__()
+        self.request = request
+
+    def items(self):
+        return Meeting.objects.all()
+
+    def cal_name(self):
+        return "%s %s" % (settings.BRANDING['INSTITUTION'],settings.BRANDING['DESC'])
+
+    def cal_desc(self):
+        return "ics feed for the %s %s calendar" % (settings.BRANDING['INSTITUTION'],settings.BRANDING['DESC'])
+
+    def item_summary(self, item):
+        out = "%s @ %s %s" % (item.presenter.fullname(), settings.BRANDING['INSTITUTION'], settings.BRANDING['DESC'])
+        return out
+
+    def item_start(self, item):
+        return item.timeslot.date_time
+
+    def item_end(self, item):
+        return item.timeslot.date_time + timedelta(hours=2)
+    
+    def item_url(self, item):
+        # thanks to added request object we can get the host
+        return self.request.build_absolute_uri(reverse('meetings_detail',kwargs={'meeting_id': item.id}))
+    
+    def item_rruleset(self, item):
+        rruleset = rrule.rruleset()
+        return rruleset
+
+    def item_categories(self, item):
+        return [settings.BRANDING['INSTITUTION'],settings.BRANDING['DESC']]
+
+def get_calendar(request):
+    cal = Calendar(request)
+    response = HttpResponse(cal.get_ical(None,request).serialize(), content_type="text/calendar")
+    response['Content-Disposition'] = 'attachment; filename=%s.ics' % '_'.join([settings.BRANDING['INSTITUTION'],settings.BRANDING['DESC']])
+    return response
