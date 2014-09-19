@@ -128,8 +128,15 @@ class Calendar(Events):
         return [settings.BRANDING['INSTITUTION'],settings.BRANDING['DESC']]
 
 def calendar_ics(request):
+    
     cal = Calendar(request)
-    response = HttpResponse(cal.get_ical(None,request).serialize(), content_type="text/calendar")
+    vcal = cal.get_ical(None,request)
+
+    # add timezone id of event (google calendar needs this for correct feed behaviour)
+    for ev in vcal.vevent_list:
+        ev.add('TZID').value = settings.TIME_ZONE
+
+    response = HttpResponse(vcal.serialize(), content_type="text/calendar")
     name = cal.cal_name().replace(' ','_').lower()
     response['Content-Disposition'] = 'attachment; filename=%s.ics' % name
     return response
