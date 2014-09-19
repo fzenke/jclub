@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template import RequestContext, loader
 from jclub.apps.meetings.models import Meeting,TimeSlot
 from django.contrib.auth.models import User
-from datetime import *
+from django.utils import timezone
 from collections import OrderedDict
 from django.shortcuts import get_object_or_404
 from django.db.models import Count
@@ -17,7 +17,7 @@ from django.core.urlresolvers import reverse
 def index(request):
 
     # get next meetings from today and order by date
-    current_day = datetime.now()
+    current_day = timezone.now()
     current_day.replace(hour=0, minute=0, second=0, microsecond=0)
     upcoming_meetings_list = Meeting.objects.filter(timeslot__date_time__gte=current_day).order_by('timeslot__date_time')[:3]
     
@@ -53,7 +53,7 @@ def detail(request, meeting_id):
 
 def meetings_index(request):
 
-    current_day = datetime.now()
+    current_day = timezone.now()
     current_day.replace(hour=0, minute=0, second=0, microsecond=0)
 
     upcoming_meetings_list = Meeting.objects.filter(timeslot__date_time__gte=current_day).order_by('timeslot__date_time')
