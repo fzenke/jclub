@@ -74,7 +74,7 @@ def days_since_meeting(self):
 def days_since_meeting_str(self):
     d_meet = days_since_meeting(self)
     if d_meet == timezone.timedelta.max.days:
-        return str('never')
+        return str(settings.BRANDING['NOT_PRESENTED'])
     else:
         return str(d_meet)
         
