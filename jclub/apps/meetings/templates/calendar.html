@@ -1,0 +1,22 @@
+{% extends "index.html" %}
+
+<!DOCTYPE html>
+
+{% block title %}{{ block.super }}: Calendar Feed {% endblock %}
+
+{% block content %}
+	
+	<div class="page-header"><h2>Calendar feed</h2></div>		
+	<div class="row">
+	<div class="col-md-12">
+		<p>Please use the following address to access an updated feed of {{ meetings_count }} currently planned and past meetings from other applications.</p>
+		<p>You should <strong>copy and paste</strong> this into any calendar product that supports the iCal format.</p>
+
+		
+		<div class="col-md-6 well well-sm"><h4><a href="{{ cal_url }}">{{ cal_url }}<a></h4>
+		
+	</div>
+	</div>
+
+
+{% endblock %}

@@ -114,6 +114,7 @@ class Calendar(Events):
         return item.timeslot.date_time
 
     def item_end(self, item):
+        print item.timeslot.date_time + timedelta(hours=2)
         return item.timeslot.date_time + timedelta(hours=2)
     
     def item_url(self, item):
@@ -127,8 +128,16 @@ class Calendar(Events):
     def item_categories(self, item):
         return [settings.BRANDING['INSTITUTION'],settings.BRANDING['DESC']]
 
-def get_calendar(request):
+def calendar_ics(request):
     cal = Calendar(request)
     response = HttpResponse(cal.get_ical(None,request).serialize(), content_type="text/calendar")
-    response['Content-Disposition'] = 'attachment; filename=%s.ics' % '_'.join([settings.BRANDING['INSTITUTION'],settings.BRANDING['DESC']])
+    name = cal.cal_name().replace(' ','_').lower()
+    response['Content-Disposition'] = 'attachment; filename=%s.ics' % name
     return response
+
+def calendar_index(request):
+    template = loader.get_template('calendar.html')
+    cal_url = request.build_absolute_uri(reverse('calendar_ics'))
+    return HttpResponse(template.render(RequestContext(request, {
+        'cal_url': cal_url 
+    })))
