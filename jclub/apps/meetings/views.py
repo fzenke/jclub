@@ -23,12 +23,17 @@ def index(request):
     # use custom function d_meet to order objects
     upcoming_presenters_list = sorted(User.objects.all(), key=lambda o: -o.d_meet)[:8]
     
+    meetings_count = Meeting.objects.count()
+    users_count = User.objects.count()
+
     template = loader.get_template('index.html')
     
     context = RequestContext(request, {
         'upcoming_meetings_list': upcoming_meetings_list,
         'upcoming_timeslots_list': upcoming_timeslots_list,
         'upcoming_presenters_list': upcoming_presenters_list,
+        'meetings_count': meetings_count,
+        'users_count': users_count,
     })
     return HttpResponse(template.render(context))
 
