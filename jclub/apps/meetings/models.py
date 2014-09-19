@@ -35,7 +35,7 @@ class Meeting(models.Model):
         return u'%s: %s %s' % (self.timeslot.date_time.strftime('%a, %d.%m.%Y @ %H:%M'), self.presenter.first_name, self.presenter.last_name)
     
     class Meta:
-        ordering = ["timeslot__date_time"] 
+        ordering = ["-timeslot__date_time"] 
 
 # These functions extend the contrib.auth.User without actually writing a linked user_profile
 # or subclassing the User class. This, for now, is the most straightforward way of
