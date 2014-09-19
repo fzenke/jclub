@@ -114,7 +114,6 @@ class Calendar(Events):
         return item.timeslot.date_time
 
     def item_end(self, item):
-        print item.timeslot.date_time + timedelta(hours=2)
         return item.timeslot.date_time + timedelta(hours=2)
     
     def item_url(self, item):
