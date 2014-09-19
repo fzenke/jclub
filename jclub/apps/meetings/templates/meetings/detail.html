@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 
-{% block title %}LCN Journal Club: Meeting details {% endblock %}
+{% block title %}{{ block.super }}: Meeting details {% endblock %}
 
 {% block content %}
 	
@@ -35,11 +35,11 @@
 					<tr>
 						<td><strong>Categories</strong></td>
 						<td> 
-							{% if meeting.publication_category.all.count >= 0 %}
-								{{ meeting.publication_category.all | join:", " }}
-							{% else %}
-								uncategorized
-							{% endif %}
+							{% for cat in meeting.publication_category.all %} 
+				                <span class="label label-info">{{ cat.name }}</span>
+				            {% empty %}
+				                uncategorized 
+				            {% endfor %}
 						</td>
 					</tr>
 					<tr>

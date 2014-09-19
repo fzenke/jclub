@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 
-{% block title %}LCN Journal Club: Presenters {% endblock %}
+{% block title %}{{ block.super }}: Presenters {% endblock %}
 
 {% block content %}
 	
@@ -10,18 +10,21 @@
 
 		<div class="page-header"><h2>Presenters <small>{{presenters.count}} registered, most active first</small></h2></div>		
 		<div class="row">
-		<div class="col-md-8">
+		<div class="col-md-12">
 		
 			{% for presenter in presenters %}
+				<div class="col-md-2" style="padding-left:0px; padding-right:4px;">
 				
-				<a href="{% url 'presenters_detail' presenter.id %}"><button type="button" class="overview btn btn-default pull-left">
+				<a href="{% url 'presenters_detail' presenter.id %}">
+				<button type="button" class="overview btn btn-default pull-left" style="width:100%">
 				<small><span class="label label-info">{{ presenter.meetings_count }}</span></small>
                 {% if presenter.first_name %}
                   {{presenter.first_name}} {{presenter.last_name}}
                 {% else %}
                   {{presenter.username}}
                 {% endif %}
-                </button></a>        			
+                </button></a>
+                </div>			
 			{% endfor %}
 		</div>
 		</div>
