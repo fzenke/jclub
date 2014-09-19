@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="{% static "img/icon.png" %}">
 
-    <title>{% block title %}{{BRANDING.INSTITUTION}} {{BRANDING.DESC}}: Central{% endblock %}</title>
+    <title>{% block title %}{{BRANDING.INSTITUTION}} {{BRANDING.DESC}}{% endblock %}</title>
 
     {% block scripts %}{% endblock %}
 
@@ -83,7 +83,7 @@
               {% if upcoming_meetings_list %}
                 {% for meeting in upcoming_meetings_list %}
                 
-                <a href="{% url 'meetings_detail' meeting.id %}"><button type="button" class="overview btn btn-default pull-left">{{ timeslot.date_time | date:"D, d. M @ P"}}{{ meeting.timeslot.date_time | date:"d. M @ P" }} <small>{% for cat in meeting.publication_category.all %} <span class="label label-info">{{ cat.name }}</span> {% empty %} uncategorized {% endfor %}</small></button></a>
+                  {% include 'meetings/meeting_single_small.html' %}
 
                 {% endfor %}
               {% else %}
@@ -100,7 +100,7 @@
             <div class="panel-body">
                 {% if upcoming_timeslots_list %}
                 {% for timeslot in upcoming_timeslots_list %}
-                  <a href="{% url 'admin:meetings_meeting_add' %}"><button type="button" class="overview btn btn-default pull-left">{{ timeslot.date_time | date:"D, d. M @ P"}}</button></a>
+                  <a href="{% url 'admin:meetings_meeting_add' %}"><button type="button" class="overview btn btn-default pull-left" style="width:100%">{{ timeslot.date_time | date:"D, d. M @ P"}}</button></a>
                 {% endfor %}
                 
               {% else %}

@@ -1,0 +1,17 @@
+<a href="{% url 'meetings_detail' meeting.id %}">
+    <button type="button" class="overview btn btn-default pull-left" style="width:100%; text-align:left">
+
+        {{ meeting.timeslot.date_time | date:"D, d. M Y @ P" }}
+        <br/>
+        <strong>{{ meeting.presenter.fullname }}</strong>
+        <br/>
+        <small>
+            {% for cat in meeting.publication_category.all %} 
+                <span class="label label-info">{{ cat.name }}</span>
+            {% empty %}
+                uncategorized 
+            {% endfor %}
+        </small>
+
+    </button>
+</a>

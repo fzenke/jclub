@@ -50,6 +50,18 @@ def user_unicode(self):
         return self.user_name
 User.add_to_class('__unicode__', user_unicode)
 
+def user_fullname(self):
+    c = []
+    if self.first_name:
+        c.append(self.first_name)
+    if self.last_name:
+        c.append(self.last_name)
+    if c:
+        return ' '.join(c)
+    else:
+        return self.user_name
+User.add_to_class('fullname', user_fullname)
+
 def days_since_meeting(self):
     last_meeting = self.meeting_set.order_by('timeslot__date_time').last()
     t_delta = timezone.timedelta.max
