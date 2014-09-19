@@ -114,7 +114,7 @@ class Calendar(Events):
         return item.timeslot.date_time
 
     def item_end(self, item):
-        return item.timeslot.date_time + timedelta(hours=2)
+        return item.timeslot.date_time + timezone.timedelta(hours=2)
     
     def item_url(self, item):
         # thanks to added request object we can get the host
