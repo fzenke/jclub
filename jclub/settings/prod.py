@@ -21,7 +21,6 @@ TEMPLATE_DEBUG = False
 
 ALLOWED_HOSTS = []
 
-
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
