@@ -9,12 +9,25 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 
 from common import *
+import os, os.path
 
-# ######### SECRET CONFIGURATION
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY = environ.get('SECRET_KEY', SECRET_KEY)
-# ######### END SECRET CONFIGURATION
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'secret_key_yo'
 
-# PRODUCTION DATABASE INITIALIZATION HERE #########
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
 
-# #############
+TEMPLATE_DEBUG = False
+
+ALLOWED_HOSTS = []
+
+
+# Database
+# https://docs.djangoproject.com/en/1.6/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(DJANGO_ROOT, 'db.sqlite3'),
+    }
+}

@@ -43,8 +43,16 @@
 						</td>
 					</tr>
 					<tr>
-						<td><strong>Publication</strong></td>
-						<td><a target="_blank" href="{{ meeting.publication_url }}">{{ meeting.publication_reference }}</a></td>
+						<td><strong>{{ BRANDING.FIELD_PUBLICATION }}</strong></td>
+						<td>
+							{% if meeting.publication_url and not meeting.publication_url == "#" %}
+							<a href="{{ meeting.publication_url }}">
+							{% endif %}
+								{{ meeting.publication_reference }}
+							{% if meeting.publication_url and not meeting.publication_url == "#" %}
+							</a>
+							{% endif %}
+						</td>
 					</tr>
 				</table>
 			</div>
