@@ -54,7 +54,7 @@ def user_unicode(self):
     if c:
         return ', '.join(c)
     else:
-        return self.user_name
+        return self.username
 User.add_to_class('__unicode__', user_unicode)
 
 def user_fullname(self):
@@ -66,7 +66,7 @@ def user_fullname(self):
     if c:
         return ' '.join(c)
     else:
-        return self.user_name
+        return self.username
 User.add_to_class('fullname', user_fullname)
 
 def days_since_meeting(self):

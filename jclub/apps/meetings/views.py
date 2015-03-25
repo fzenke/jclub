@@ -25,7 +25,9 @@ def index(request):
     upcoming_timeslots_list = TimeSlot.objects.filter(meeting__isnull=True).filter(date_time__gte=current_day).order_by('date_time')[:3]
     
     # use custom function d_meet to order objects
-    upcoming_presenters_list = sorted(User.objects.all(), key=lambda o: -o.d_meet)[:8]
+    users = User.objects.all()
+    users_act = [o for o in users if o.is_active]
+    upcoming_presenters_list = sorted(users_act, key=lambda o: -o.d_meet)[:8]
     
     meetings_count = Meeting.objects.count()
     users_count = User.objects.count()
