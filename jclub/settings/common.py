@@ -41,7 +41,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'south',
     'django_cal',
     'jclub.apps.meetings',
 )
@@ -55,10 +54,28 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "jclub.apps.meetings.context_processors.branding",
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            normpath(join(DJANGO_ROOT, 'templates')),
+        ],
+        'OPTIONS': {
+            'debug': True,
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'jclub.apps.meetings.context_processors.branding',
+            ],
+            'loaders': [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+            ],
+
+        },
+    },
+]
 
 ROOT_URLCONF = 'jclub.urls'
 WSGI_APPLICATION = 'jclub.wsgi.application'
@@ -89,8 +106,4 @@ STATIC_URL = '/static/'
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = (
     normpath(join(DJANGO_ROOT, 'assets')),
-)
-
-TEMPLATE_DIRS = (
-    normpath(join(DJANGO_ROOT, 'templates')),
 )
