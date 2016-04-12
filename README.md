@@ -2,7 +2,6 @@
 
 Django based journal club lab meeting organizer.
 
-
 ## Copyright 
 
 Copyright 2014--2015
@@ -10,6 +9,10 @@ Copyright 2014--2015
 * Friedemann Zenke <friedemann.zenke@epfl.ch>
 
 JClub is released under the GPLv2 (please see LICENSE).
+
+## Screenshot
+
+![alt tag](https://raw.githubusercontent.com/fzenke/jclub/master/jclub_screenshot.png)
 
 
 ## First start
