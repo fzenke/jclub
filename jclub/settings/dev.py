@@ -17,8 +17,6 @@ SECRET_KEY = 'secret_key_yo'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
-
 ALLOWED_HOSTS = []
 
 
