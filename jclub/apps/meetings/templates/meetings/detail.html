@@ -35,7 +35,7 @@
 					<tr>
 						<td><strong>Categories</strong></td>
 						<td> 
-							{% for cat in meeting.publication_category.all %} 
+							{% for cat in meeting.category.all %} 
 				                <span class="label label-info">{{ cat.name }}</span>
 				            {% empty %}
 				                uncategorized 
@@ -45,11 +45,11 @@
 					<tr>
 						<td><strong>{{ BRANDING.FIELD_PUBLICATION }}</strong></td>
 						<td>
-							{% if meeting.publication_url and not meeting.publication_url == "#" %}
-							<a href="{{ meeting.publication_url }}">
+							{% if meeting.url and not meeting.publication_url == "#" %}
+							<a href="{{ meeting.url }}">
 							{% endif %}
-								{{ meeting.publication_reference }}
-							{% if meeting.publication_url and not meeting.publication_url == "#" %}
+								{{ meeting.title }}
+							{% if meeting.url and not meeting.url == "#" %}
 							</a>
 							{% endif %}
 						</td>

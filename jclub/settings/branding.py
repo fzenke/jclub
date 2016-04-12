@@ -1,6 +1,6 @@
 BRANDING = {
-    'INSTITUTION': 'My Organization',
-    'DESC': 'Journal Club',
+    'INSTITUTION': 'MyOrganization',
+    'DESC': 'Meetings',
     'NOT_PRESENTED': '<span class="glyphicon glyphicon-ban-circle"></span>',
-    'FIELD_PUBLICATION': 'Publication',
+    'FIELD_PUBLICATION': 'Title',
 }

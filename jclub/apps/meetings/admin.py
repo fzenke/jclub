@@ -1,10 +1,10 @@
 from django.contrib import admin
-from django.db.models import Q
+from django.db.models import Q, F
 from django.utils import timezone
-from jclub.apps.meetings.models import Category, Meeting, TimeSlot
+from jclub.apps.meetings.models import Category, Meeting, TimeSlot, Event
 
 
-# Custom admin backend form - this restricts the timeslots dropdown 
+# Custom admin backend form - this restricts the timeslots dropdown
 # to only the ones not assigned to a meeting, as well as the users for non-admin users
 # to only himself and the currently assigned one.
 
@@ -17,28 +17,36 @@ class MeetingAdmin(admin.ModelAdmin):
     def get_form(self, request, obj=None, **kwargs):
 
         form = super(MeetingAdmin, self).get_form(request, obj, **kwargs)
-        
-        # restrict presenters to current + self for non-superusers 
+
+        # restrict presenters to current + self for non-superusers
         if not request.user.is_superuser:
+
             idset = []
             if obj:
-                idset=[obj.presenter.id]
-            form.base_fields['presenter'].queryset = form.base_fields['presenter'].queryset.filter(Q(id=request.user.id) | Q(id__in=idset))
+                idset = [obj.presenter.id]
 
-        # restrict timeslots to current + available which are from today+future (or any for superuser)
+            form.base_fields['presenter'].queryset = \
+                form.base_fields['presenter'].queryset\
+                    .filter(Q(id=request.user.id) | Q(id__in=idset))
+
+        # restrict timeslots to current + available which are from today+future
+        # (or any for superuser)
         idset = []
-        q_date = Q(meeting__isnull=True) 
+        q_date = Q(meeting__isnull=True)
         if not request.user.is_superuser:
             mindate = timezone.now()
-            q_new = Q(date_time__gte=mindate) 
-            q_date.add(q_new,Q.AND)
+            q_new = Q(date_time__gte=mindate)
+            q_date.add(q_new, Q.AND)
+
         if obj:
-            idset=[obj.id]
-        form.base_fields['timeslot'].queryset = form.base_fields['timeslot'].queryset\
-        .filter(q_date | Q(meeting__id__in=idset))
-            
+            idset = [obj.id]
+
+        form.base_fields['timeslot'].queryset = form.base_fields['timeslot']\
+            .queryset.filter(q_date | Q(meeting__id__in=idset))
+
         return form
 
 admin.site.register(Meeting, MeetingAdmin)
 admin.site.register(TimeSlot)
 admin.site.register(Category)
+admin.site.register(Event)

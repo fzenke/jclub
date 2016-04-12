@@ -14,12 +14,12 @@ tz_utc = pytz.timezone('UTC')
 times = TimeSlot.objects.all()
 
 for t in times:
-	print "Converting time ",
-	t_old = t.date_time
-	print t_old, " --> "
-	t_naive = t_old.replace(tzinfo=None)
-	t_loc = tz.localize(t_naive)
-	t_new = t_loc.astimezone(tz_utc)
-	print t_new
-	t.date_time = t_new
-	t.save()
+    print "Converting time ",
+    t_old = t.date_time
+    print t_old, " --> "
+    t_naive = t_old.replace(tzinfo=None)
+    t_loc = tz.localize(t_naive)
+    t_new = t_loc.astimezone(tz_utc)
+    print t_new
+    t.date_time = t_new
+    t.save()
