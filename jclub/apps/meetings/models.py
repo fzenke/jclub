@@ -26,9 +26,9 @@ class TimeSlot(models.Model):
         ordering = ["date_time"]      
 
 class Meeting(models.Model):
-    presenter = models.ForeignKey(User, unique=False)
-    timeslot  = models.OneToOneField(TimeSlot)
-    location  = models.CharField(max_length=100)
+    presenter = models.ForeignKey(User, unique=False, on_delete=models.CASCADE)
+    timeslot = models.OneToOneField(TimeSlot, on_delete=models.CASCADE)
+    location = models.CharField(max_length=100)
     publication_reference = models.CharField(max_length=200)
     publication_url       = models.CharField(max_length=200)
     publication_category  = models.ManyToManyField(Category)
